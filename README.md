@@ -26,6 +26,23 @@ remotes::install_github("reconhub/reportfactory@old_version")
 You can also download it directly from
 <https://github.com/reconhub/reportfactory/releases/tag/old_version>.
 
+You can install the current version of the package from
+[CRAN](https://cran.r-project.org/) with:
+
+``` r
+install.packages("reportfactory")
+```
+
+The development version can be installed from
+[GitHub](https://github.com/) with:
+
+``` r
+if (!require(remotes)) {
+  install.packages("remotes")
+}
+remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
+```
+
 ## reportfactory in a nutshell
 
 {reportfactory} is a R package which facilitates workflows for handling
@@ -116,8 +133,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2020-12-10_T17-14-40/example_report.html"
-#> [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"
+#> [1] "example_report/2021-01-21_T10-44-57/example_report.html"
+#> [2] "example_report/2021-01-21_T10-44-57/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -134,10 +151,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2020-12-10_T17-14-40/example_report.html"         
-#> [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"          
-#> [3] "example_report/regional/2020-12-10_T17-14-41/example_report.html"
-#> [4] "example_report/regional/2020-12-10_T17-14-41/example_report.Rmd"
+#> [1] "example_report/2021-01-21_T10-44-57/example_report.html"         
+#> [2] "example_report/2021-01-21_T10-44-57/example_report.Rmd"          
+#> [3] "example_report/regional/2021-01-21_T10-44-58/example_report.html"
+#> [4] "example_report/regional/2021-01-21_T10-44-58/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -155,7 +172,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/Rtmpm0vIol/my_factory
+#> /tmp/Rtmp1gGdYE/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -164,11 +181,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-10_T17-14-40
+#> │       ├── 2021-01-21_T10-44-57
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-10_T17-14-41
+#> │           └── 2021-01-21_T10-44-58
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
