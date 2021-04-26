@@ -28,6 +28,46 @@ test_that("test parameteriesed report output", {
   expect_snapshot_file(md_file, "param_report_check.md", binary = FALSE)
 })
 
+test_that("test ignore_case works report output", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  # copy test reports over
+  file_copy(
+    path("test_reports", "parameterised.Rmd"),
+    path(f, "report_sources")
+  )
+
+  # compile report
+  compile_reports(
+    "parameterised.rmd",
+    f,
+    ignore.case = TRUE,
+    params = list(test1 = "three", test2 = "four")
+  )
+
+  # check the output
+  md_file <- grep("\\.md", list_outputs(f), value = TRUE)
+  md_file <- path(f, "outputs", md_file)
+
+  expect_snapshot_file(md_file, "param_report_check.md", binary = FALSE)
+
+  # Should error if not case insensitive
+  expect_error(
+    compile_reports(
+      "parameterised.rmd",
+      f,
+      ignore.case = FALSE,
+      params = list(test1 = "three", test2 = "four")
+    )
+  )
+})
+
+
 
 test_that("test output folder gets recreated if not there", {
   skip_if_pandoc_not_installed()
@@ -302,6 +342,60 @@ test_that("figures folders copied correctly reports", {
       MoreArgs = list(fixed = TRUE)
     )
   ))
+
+})
+
+
+test_that("compiling with no reports errors correctly", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  # delete only report present
+  file_delete(path(f, "report_sources", "example_report.Rmd"))
+
+  expect_error(
+    compile_reports(factory = f),
+    "No reports found in",
+    fixed = TRUE
+  )
+
+})
+
+
+test_that("compiling with invalid index errors correctly", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  expect_error(
+    compile_reports(2, factory = f),
+    "Unable to match reports with the given index",
+    fixed = TRUE
+  )
+
+})
+
+
+test_that("compiling with incorrect report name errors correctly", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  expect_error(
+    compile_reports("test", factory = f),
+    "Unable to find matching reports to compile",
+    fixed = TRUE
+  )
 
 })
 
