@@ -1,8 +1,16 @@
+# reportfactory (development version)
+
+# reportfactory 0.3.1
+
+* Fixed `list_deps()`, which was broken due to major changes in the
+  `checkpoint` package, which the function relies on.
+
+
 # reportfactory 0.3.0
 
 * Option added to create an RStudio project file whilst creating a new factory.
 * `list_reports()` now looks for both extension `.Rmd` and `.rmd`.
-* Added parameter to`compile_reports` to allow case insensitive report matching.
+* Added parameter to `compile_reports()` to allow case insensitive report matching.
 
 # reportfactory 0.2.0
 
